@@ -1,18 +1,97 @@
 {
-  "welcomeFile": "index.html",
-  "authenticationMethod": "route",
-  "routes": [
-    {
-      "source": "^/srv/(.*)$",
-      "authenticationType": "xsuaa",
-      "scope": "$XSAPPNAME.User",
-      "destination": "srv"
-    },
-    {
-      "source": "/(.*)",
-      "authenticationType": "xsuaa",
-      "scope": "$XSAPPNAME.User",
-      "localDir": "resources"
-    }
-  ]
-}
+    "welcomeFile": "index.html",
+    "authenticationMethod": "route",
+    "routes": [
+      {
+        "source": "^/srv/(.*)$",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.User",
+        "destination": "srv"
+      },
+      {
+          "source": "^/csrv/(.*)$",
+          "authenticationType": "xsuaa",
+          "scope": "$XSAPPNAME.Admin",
+          "destination": "srv",
+          "csrfProtection": false
+        },
+        {
+          "source": "^/ssrv/(.*)$",
+          "authenticationType": "xsuaa",
+          "scope": "$XSAPPNAME.Setup",
+          "destination": "srv",
+          "csrfProtection": false
+        },
+        {
+          "source": "^/asrv/(.*)$",
+          "authenticationType": "xsuaa",
+          "scope": "$XSAPPNAME.User",
+          "destination": "srv",
+          "csrfProtection": false
+        },
+      {
+        "source": "/controlroom.html$",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Admin",
+        "localDir": "resources",
+        "csrfProtection": false
+        
+      },
+      
+      {
+        "source": "/tenant.html",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Admin",
+        "localDir": "resources",
+        "csrfProtection": false
+      },
+      
+      {
+        "source": "/network.html",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Admin",
+        "localDir": "resources",
+        "csrfProtection": false
+      },
+      {
+        "source": "/setup.html$",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Setup",
+        "localDir": "resources",
+        "csrfProtection": false
+        
+      },
+      
+      {
+        "source": "/customer.html",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Setup",
+        "localDir": "resources",
+        "csrfProtection": false
+      },
+      
+      {
+        "source": "/supplier.html",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.Setup",
+        "localDir": "resources",
+        "csrfProtection": false
+      },
+      {
+        "source": "/app.html",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.User",
+        "localDir": "resources",
+        "csrfProtection": false
+      },
+
+      
+      {
+        "source": "/(.*)",
+        "authenticationType": "xsuaa",
+        "scope": "$XSAPPNAME.User",
+        "localDir": "resources"
+      }
+    ]
+  }
+  

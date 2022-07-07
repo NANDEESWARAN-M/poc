@@ -9,7 +9,13 @@
         "@sap/xsenv": "latest",
         "@sap/xssec": "latest",
         "passport": "latest",
-        "@sap/hdbext": "latest"
+        "@sap/hdbext": "latest",
+        "@sap-cloud-sdk/core": "latest",
+        "axios": "latest",
+        "axios-oauth-client": "latest",
+        "axios-token-interceptor": "latest",
+        "qs": "latest",
+        "cfenv": "latest"
     },
     "scripts": {
         "start": "node server.js"
