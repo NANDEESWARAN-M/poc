@@ -1,0 +1,36 @@
+---
+general:
+  buildTool: "mta"
+stages:
+  Build:
+    mavenExecuteStaticCodeChecks: false
+    npmExecuteLint: true
+  Additional Unit Tests:
+    npmExecuteScripts: false
+    karmaExecuteTests: false
+  Acceptance:
+    cloudFoundryDeploy: false
+    cfApiEndpoint: "https://api.cf.eu10-004.hana.ondemand.com"
+    cfOrg: "kaar"
+    cfSpace: "kupex"
+    cfAppName: "poc"
+    cfCredentialsId: "deploy-to-cf"
+    uiVeri5ExecuteTests: false
+  Release:
+    cloudFoundryDeploy: true
+    cfApiEndpoint: "https://api.cf.eu10-004.hana.ondemand.com"
+    cfOrg: "kaar"
+    cfSpace: "kupex"
+    cfAppName: "poc"
+    cfCredentialsId: "deploy-to-cf"
+    tmsUpload: false
+steps:
+  artifactPrepareVersion:
+    versioningType: "cloud_noTag"
+  npmExecuteLint:
+    failOnError: true
+  cloudFoundryDeploy:
+    mtaDeployParameters: "-f --version-rule ALL"
+  tmsUpload:
+    nodeName: "qa"
+    credentialsId: "tms-sk"

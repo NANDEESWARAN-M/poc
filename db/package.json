@@ -1,0 +1,12 @@
+{
+    "name": "poc-db",
+    "engines": {
+        "node": "14.x"
+    },
+    "dependencies": {
+        "@sap/hdi-deploy": "latest"
+    },
+    "scripts": {
+        "start": "node node_modules/@sap/hdi-deploy/deploy.js"
+    }
+}
