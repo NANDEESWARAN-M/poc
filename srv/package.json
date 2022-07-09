@@ -15,7 +15,8 @@
         "axios-oauth-client": "latest",
         "axios-token-interceptor": "latest",
         "qs": "latest",
-        "cfenv": "latest"
+        "cfenv": "latest",
+        "cookie-parser": "latest"
     },
     "scripts": {
         "start": "node server.js"

@@ -84,14 +84,19 @@
         "localDir": "resources",
         "csrfProtection": false
       },
-
-      
       {
         "source": "/(.*)",
         "authenticationType": "xsuaa",
-        "scope": "$XSAPPNAME.User",
+        "scope": ["$XSAPPNAME.User","$XSAPPNAME.Setup","$XSAPPNAME.Admin"],
         "localDir": "resources"
       }
-    ]
+    ],
+    "login": {
+        "callbackEndpoint": "/custom/login/callback"
+     },
+     "logout": {
+        "logoutEndpoint": "/my/logout",
+        "logoutPage": "/logout.html"
+     }
   }
   

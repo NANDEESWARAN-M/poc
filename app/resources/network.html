@@ -3,6 +3,8 @@
 
 <head>
     <title>KUPEX - Control Room</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -12,6 +14,7 @@
     type="text/javascript"
     src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
   ></script>
+
     <style type="text/css">
       #mynetwork {
         width: 700px;
@@ -32,6 +35,20 @@
     }
     
     </style>
+       <script>
+        $(document).ready(function () {
+            $.get('/csrv/username').then(function(res){
+                    $('#user').text(res.id); 
+                });
+       
+    
+                                         
+                                       
+                      
+    });
+            
+     
+        </script>
 </head>
 
 <body id="page-top">
@@ -159,10 +176,10 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nandeeswaran</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user">Nandeeswaran</span>
+                            <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                        </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -237,18 +254,18 @@
                     <br />
                     <br />
                     <label>
-                      Filter edges
-                      <div>
+                      <!-- Filter edges -->
+                      <!-- <div>
                         <label>
                           <input type="checkbox" name="edgesFilter" value="company" checked="" />
                           <span style="color: green">company account</span> 
                         </label>
-                      </div>
-                      <div>
+                      </div> -->
+                      <!-- <div>
                         <label>
                           <input type="checkbox" name="edgesFilter" value="relation" checked="" />
                            <span style="color: red">customers & suppliers </span> 
-                        </label>
+                        </label> -->
                       </div>
                       <div>
                         <!-- <label>
@@ -331,6 +348,32 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     <script type="text/javascript">
+         function returnnodes()
+                {
+                    var result = null;
+                    $.ajax({
+                        url: '/csrv/getnodes',
+                        type: 'get',
+                        async: false,
+                        success: function(data) {
+                            result = data;
+                        } 
+                    });
+                    return result;
+                }
+                function returnedges()
+                {
+                    var result = null;
+                    $.ajax({
+                        url: '/csrv/getedges',
+                        type: 'get',
+                        async: false,
+                        success: function(data) {
+                            result = data;
+                        } 
+                    });
+                    return result;
+                }
       // const nodeFilterSelector = document.getElementById("nodeFilterSelect");
      const edgeFilters = document.getElementsByName("edgesFilter");
      
@@ -343,52 +386,75 @@
      /**
       * In this example we do not mutate nodes or edges source data.
       */
-     const nodes = new vis.DataSet([
-       { id: 1, label: "linon" },
-       { id: 2, label: "kaar"},
-       { id: 3, label: "wayfair"},
-       { id: 4, label: "metus" },
-       { id: 5, label: "tailwind"},
-     ]);
-     
-     const edges = new vis.DataSet([
-       {
-         from: 3,
-         to: 1,
-         relation: "company",
-        //  arrows: "to,from",
-         color: { color: "green" },
-       },
-       {
-         from: 4,
-         to: 1,
-         relation: "company",
-        //  arrows: "to,from",
-         color: { color: "green" },
-       },
-       {
-         from: 2,
-         to: 4,
-         relation: "supplier",
-         arrows: "to",
-         color: { color: "red" },
-       },
-       {
-         from: 5,
-         to: 3,
-         relation: "customer",
-         arrows: "from",
+      const nodes = new vis.DataSet(JSON.parse(returnnodes()));
+      var results=JSON.parse(returnedges());
+      var newjson=[];
+        for(i=0;i<results.length;i++){
+            var temp={};
+           temp["from"]=results[i].from;
+           temp["to"]=results[i].to;
+           temp["relation"]=results[i].relation;
+            if(results[i].relation=="employee"){
+                var col1={}
+                col1["color"]="green";
+                temp["color"]=col1
+             
+            }
+            else if(results[i].relation=="supplier"){
+              temp["arrows"]="to";
+              var col2={}
+                col2["color"]="red";
+                temp["color"]=col2;
+            }
+            else{
+              var col3={}
+                col3["color"]="red";
+                temp["color"]=col3;
+                temp["arrows"]="from";
+                
+            }
+            newjson.push(temp);
 
-         color: { color: "red" },
-       },
-       {
-         from: 5,
-         to: 4,
-         relation: "customer",
-         arrows: "from",
-         color: { color: "red" },
-       }
-     ]);
+        }
+      const edges= new vis.DataSet(newjson);
+     
+    //  const edges = new vis.DataSet([       {
+    //      from: 3,
+    //      to: 1,
+    //      relation: "company",
+    //     //  arrows: "to,from",
+    //      color: { color: "green" },
+    //    },
+    //    {
+    //      from: 4,
+    //      to: 1,
+    //      relation: "company",
+    //     //  arrows: "to,from",
+    //      color: { color: "green" },
+    //    },
+    //    {
+    //      from: 2,
+    //      to: 4,
+    //      relation: "supplier",
+    //      arrows: "to",
+    //      color: { color: "red" },
+    //    },
+    //    {
+    //      from: 5,
+    //      to: 3,
+    //      relation: "customer",
+    //      arrows: "from",
+
+    //      color: { color: "red" },
+    //    },
+    //    {
+    //      from: 5,
+    //      to: 4,
+    //      relation: "customer",
+    //      arrows: "from",
+    //      color: { color: "red" },
+    //    }
+    //  ]);
      
      /**
       * filter values are updated in the outer scope.
@@ -398,7 +464,7 @@
      const edgesFilterValues = {
        customer: true,
        supplier: true,
-       company: true,
+       employee: true,
      };
      
      /*

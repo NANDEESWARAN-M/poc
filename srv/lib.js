@@ -62,7 +62,7 @@ function sleep(ms) {
   }
 async function subscribeApp(tenantid) {
     console.log(1);
-    await sleep(20000);
+    await sleep(21000);
     console.log(2);
     try {
         // get access token
@@ -70,7 +70,7 @@ async function subscribeApp(tenantid) {
             method: 'POST',
             url: 'https://kaar.authentication.eu10.hana.ondemand.com' + '/oauth/token?grant_type=client_credentials&response_type=token',
             headers: {
-                'Authorization': 'Basic ' + Buffer.from('sb-appd4-clone!b144159|lps-registry-broker!b14' + ':' + 'd27e42f2-23de-4733-98ba-a2947dfa2d3b$dclydRFiMXL0zVPtEBYe2GVlw0h1n7rDg08stKJJXuo=').toString('base64')
+                'Authorization': 'Basic ' + Buffer.from('sb-test-clone!b144159|lps-registry-broker!b14' + ':' + 'f8dca948-230b-425a-be48-ceeac4c24178$b20hBj4NHk6w1vAImnkTiKpnhehCSgrLgz4OI4eL9zU=').toString('base64')
             }
         };
         let res6 = await axios(options6);
