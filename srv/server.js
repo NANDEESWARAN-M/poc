@@ -125,7 +125,7 @@ app.get('/csrv/sub', function (req, res) {
 });
 
 app.get('/csrv/gettenants', function (req, res) {
-    let sql = 'SELECT COMPANY.COMPNAME,ACCOUNTS.ACCOUNT,T.TURL FROM (SELECT COMPID,TURL FROM TENANTS) AS T,COMPANY,ACCOUNTS WHERE T.COMPID=COMPANY.COMPID AND T.COMPID=ACCOUNTS.COMPID;';
+    let sql = 'SELECT COMPANY.COMPNAME,T.TURL FROM (SELECT COMPID,TURL FROM TENANTS) AS T,COMPANY WHERE T.COMPID=COMPANY.COMPID;';
     req.db.exec(sql, function (err, results) {
         if (err) {
             res.type('text/plain').status(500).send('ERROR: ' + err.toString());
